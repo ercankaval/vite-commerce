@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Ceket",
+      "slug": "ceket"
+    },
+    {
+      "id": 2,
+      "title": "Kazak",
+      "slug": "kazak"
+    },
+    {
+      "id": 3,
+      "title": "Sweatshirt",
+      "slug": "sweatshirt"
+    }
+  ]
+}
