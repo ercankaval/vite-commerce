@@ -4,6 +4,7 @@ import SingleProduct from "./shared/SingleProduct.vue";
 import categories from '@/mixins/categories.json'
 
 export default {
+  name: 'singleProduct',
   components: {SingleProduct},
   data() {
     return {
@@ -11,7 +12,9 @@ export default {
       selectedCategory: 'Tüm Ürünler',
       products: products.data,
       categories: categories.data,
-      cartItems: []
+      cartItems: [],
+      alertMessage: false,
+      alertMessageText: ''
     }
   },
   created() {
@@ -40,10 +43,20 @@ export default {
       }
 
       window.localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
+      this.showAlertMessage('Seçtiğiniz ürün sepetinize eklenmiştir.')
     },
     removeItem(index) {
       this.cartItems.splice(this.cartItems.indexOf(index), 1)
       window.localStorage.setItem('cartItems', JSON.stringify(this.cartItems))
+      this.showAlertMessage('Seçtiğiniz ürün sepetinizden çıkartılmıştır.')
+    },
+    showAlertMessage(text) {
+      this.alertMessage = true
+      this.alertMessageText = text
+      setTimeout(() => this.hideAlertMessage(), 1000)
+    },
+    hideAlertMessage() {
+      this.alertMessage = false
     }
   }
 }
@@ -53,22 +66,7 @@ export default {
 <template>
   <div class="sm:container sm:mx-auto">
     <!-- Component Start -->
-    <table v-if="cartItems">
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Image</th>
-        <th>Quantity</th>
-        <th>*</th>
-      </tr>
-      <tr v-for="item in cartItems" :key="item.id">
-        <td>{{item.id}}</td>
-        <td>{{item.title}}</td>
-        <td><img :src="item.image" style="width: 100px"></td>
-        <td>{{item.qty}}</td>
-        <td><button @click="removeItem(item)">Remove</button></td>
-      </tr>
-    </table>
+
     <h1 class="text-3xl">
       The North Face
       <span v-if="categoryId > 0">{{ selectedCategory }} Ürünleri</span>
@@ -103,8 +101,22 @@ export default {
       <SingleProduct :products="products" :categories="categories" :addToCart="addToCart" />
     </div>
     <!-- Component End  -->
-    <div class="fixed right-1/2 bottom-3 py-3 px-5 rounded-lg border border-green-500 bg-green-400 text-white">
-      Secondary Alert
+
+      <div v-if="alertMessage" class="fixed right-3 bottom-3">
+        <div class="bg-white border-t-4 rounded-b px-4 py-3 shadow-md" role="alert">
+          <div class="flex">
+            <div class="py-1"><svg class="fill-current h-6 w-6 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+            <div>
+              <p class="font-bold relative">
+                <span>Bilgi</span>
+                <span @click="hideAlertMessage()" class="absolute top-0 bottom-0 right-0">
+                  <svg class="fill-current h-6 w-6 text-white-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                </span>
+              </p>
+              <p class="text-sm">{{alertMessageText}}</p>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </template>

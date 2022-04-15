@@ -30,7 +30,7 @@ export default {
   <img :src="product.image">
 
   <div class="absolute bg-gradient-to-t flex from-gray-800 h-full hover:opacity-100 items-center justify-center left-0 opacity-0 top-0 w-full">
-  <button class="bg-transparent hover:bg-indigo-500 text-white font-semibold hover:text-white py-2 px-4 border border-indigo-500 hover:border-transparent rounded"
+  <button class="bg-transparent hover:bg-indigo-500 text-white font-semibold hover:text-white py-2 px-4 border border-white-500 hover:border-transparent rounded"
   @click="addToCart(product)"
   >Sepete Ekle</button>
   </div>

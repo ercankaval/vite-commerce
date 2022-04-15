@@ -1,5 +1,61 @@
+<script>
+import AppHeaderLinks from '@/views/shared/AppHeaderLinks.vue';
+import BasketModal from '@/views/shared/BasketModal.vue';
+
+export default {
+  name: 'headerModule',
+  components: {AppHeaderLinks, BasketModal},
+  data() {
+    return {
+      isOpen: false,
+      theme: '',
+      modal: true,
+      categories: [
+        {
+          id: 1,
+          value: 'web',
+          name: 'Web Application',
+        },
+        {
+          id: 2,
+          value: 'mobile',
+          name: 'Mobile Application',
+        },
+        {
+          id: 3,
+          value: 'ui-ux',
+          name: 'UI/UX Design',
+        },
+        {
+          id: 4,
+          value: 'branding',
+          name: 'Branding & Anim',
+        },
+      ]
+    };
+  },
+  methods: {
+    showModal() {
+      if (this.modal) {
+        // Stop screen scrolling
+        document
+            .getElementsByTagName('html')[0]
+            .classList.remove('overflow-y-hidden');
+        this.modal = false;
+      } else {
+        document
+            .getElementsByTagName('html')[0]
+            .classList.add('overflow-y-hidden');
+        this.modal = true;
+      }
+    }
+  }
+}
+</script>
+
 <template>
-  <nav id="nav" class="sm:container sm:mx-auto">
+  <div>
+    <nav id="nav" class="lg:container lg:mx-auto">
     <!-- Header start -->
     <div
         class="block my-3 sm:flex sm:items-center sm:justify-between z-10"
@@ -63,58 +119,5 @@
     </div>
 
   </nav>
+  </div>
 </template>
-
-<script>
-import AppHeaderLinks from '@/views/shared/AppHeaderLinks.vue';
-import BasketModal from '@/views/shared/BasketModal.vue';
-
-export default {
-  components: {AppHeaderLinks, BasketModal},
-  data() {
-    return {
-      isOpen: false,
-      theme: '',
-      modal: true,
-      categories: [
-        {
-          id: 1,
-          value: 'web',
-          name: 'Web Application',
-        },
-        {
-          id: 2,
-          value: 'mobile',
-          name: 'Mobile Application',
-        },
-        {
-          id: 3,
-          value: 'ui-ux',
-          name: 'UI/UX Design',
-        },
-        {
-          id: 4,
-          value: 'branding',
-          name: 'Branding & Anim',
-        },
-      ]
-    };
-  },
-  methods: {
-    showModal() {
-      if (this.modal) {
-        // Stop screen scrolling
-        document
-            .getElementsByTagName('html')[0]
-            .classList.remove('overflow-y-hidden');
-        this.modal = false;
-      } else {
-        document
-            .getElementsByTagName('html')[0]
-            .classList.add('overflow-y-hidden');
-        this.modal = true;
-      }
-    }
-  }
-}
-</script>
